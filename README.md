@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📄 PDF Manager
+# PDF Manager
 
 ### Full-Stack PDF Management Platform with Visual Canvas Editor
 
@@ -85,36 +85,36 @@ Built on **Fabric.js v7** over a **PDF.js** page renderer:
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│              Browser (React 19 + TypeScript + Vite 7)            │
-│                                                                    │
-│  PDF.js renderer  ←→  Fabric.js canvas editor                    │
-│  @dnd-kit drag-drop  ·  TanStack Query  ·  Tailwind CSS v4       │
+│ Browser (React 19 + TypeScript + Vite 7) │
+│ │
+│ PDF.js renderer ←→ Fabric.js canvas editor │
+│ @dnd-kit drag-drop · TanStack Query · Tailwind CSS v4 │
 └────────────────────┬────────────────────────────────────────────┘
-                     │  /api/* + Range streaming
-                     ▼
+ │ /api/* + Range streaming
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                     FastAPI (Uvicorn, async)                      │
-│                                                                    │
-│  Routers: auth · pdfs · users · logs                             │
-│  Middleware: request-ID injection · slowapi rate limiter         │
-│  Services: pdf_service · edit_service · storage_service          │
+│ FastAPI (Uvicorn, async) │
+│ │
+│ Routers: auth · pdfs · users · logs │
+│ Middleware: request-ID injection · slowapi rate limiter │
+│ Services: pdf_service · edit_service · storage_service │
 └────────┬──────────────────────────┬─────────────────────────────┘
-         │  asyncpg (SQLAlchemy)     │  Celery tasks
-         ▼                           ▼
-┌──────────────┐           ┌────────────────────────┐
-│ PostgreSQL   │           │  Redis + Celery Worker  │
-│ 4 tables     │           │                         │
-│ users        │           │  process_uploaded_pdf   │
-│ pdfs         │           │  save_edited_pdf        │
-│ pdf_versions │           │  purge_deleted_pdfs     │
-│ logs         │           │  (Celery Beat, 30-day)  │
-└──────────────┘           └────────────────────────┘
-         │
-         ▼
+ │ asyncpg (SQLAlchemy) │ Celery tasks
+ ▼ ▼
+┌──────────────┐ ┌────────────────────────┐
+│ PostgreSQL │ │ Redis + Celery Worker │
+│ 4 tables │ │ │
+│ users │ │ process_uploaded_pdf │
+│ pdfs │ │ save_edited_pdf │
+│ pdf_versions │ │ purge_deleted_pdfs │
+│ logs │ │ (Celery Beat, 30-day) │
+└──────────────┘ └────────────────────────┘
+ │
+ ▼
 ┌────────────────────────────┐
-│  Local file storage         │
-│  storage/<user_id>/<pdf_id> │
-│  (original + versions)      │
+│ Local file storage │
+│ storage/<user_id>/<pdf_id> │
+│ (original + versions) │
 └────────────────────────────┘
 ```
 
@@ -156,8 +156,8 @@ Built on **Fabric.js v7** over a **PDF.js** page renderer:
 
 ```
 users ──────────────────── pdfs ─── pdf_versions
-                             │
-                           logs (audit trail for every API event)
+ │
+ logs (audit trail for every API event)
 ```
 
 | Table | Key Columns |
@@ -234,18 +234,18 @@ cd frontend && npm install && npm run dev
 ```
 pdf-manager/
 ├── backend/
-│   ├── main.py                      # FastAPI entry point
-│   ├── app/
-│   │   ├── api/                     # auth · pdfs · users · logs routers
-│   │   ├── core/                    # config · deps · security · middleware · limiter
-│   │   ├── db/                      # models · session · sync_session
-│   │   ├── services/                # pdf_service · edit_service · storage_service
-│   │   └── tasks/                   # celery_app · pdf_tasks (process, save, purge)
-│   └── tests/e2e/                   # 8 test modules (auth → upload → edit → logs)
+│ ├── main.py # FastAPI entry point
+│ ├── app/
+│ │ ├── api/ # auth · pdfs · users · logs routers
+│ │ ├── core/ # config · deps · security · middleware · limiter
+│ │ ├── db/ # models · session · sync_session
+│ │ ├── services/ # pdf_service · edit_service · storage_service
+│ │ └── tasks/ # celery_app · pdf_tasks (process, save, purge)
+│ └── tests/e2e/ # 8 test modules (auth → upload → edit → logs)
 ├── frontend/
-│   └── src/
-│       ├── pages/                   # Login · Signup · Dashboard · Viewer · Editor · Logs
-│       └── components/              # ToolbarSidebar · PropertiesPanel · PageManagerPanel
+│ └── src/
+│ ├── pages/ # Login · Signup · Dashboard · Viewer · Editor · Logs
+│ └── components/ # ToolbarSidebar · PropertiesPanel · PageManagerPanel
 ├── start-backend.sh
 └── start-celery.sh
 ```
